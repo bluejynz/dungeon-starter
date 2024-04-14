@@ -7,9 +7,19 @@ import { Link } from "react-router-dom";
 
 function Nav() {
     return (
-        <nav>
-            <p className="text-red-800">teste</p>
-        </nav>
+        <NavigationMenu>
+            <NavigationMenuList>
+                <NavigationMenuItem>
+                    <Link to="/">Home</Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link to="/">Teste1</Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link to="/">Teste2</Link>
+                </NavigationMenuItem>
+            </NavigationMenuList>
+        </NavigationMenu>
     );
 }
 
