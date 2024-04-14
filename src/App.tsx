@@ -11,6 +11,9 @@ function App() {
                 <Nav />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/char-creation" element={<p>Char Creation Page</p>} /> 
+                    <Route path="/char-creation/dice-rolls" element={<p>Dice Rolls Page</p>} /> 
+                    <Route path="/fighting" element={<p>Fighting Page</p>} /> 
                 </Routes>
             </ThemeProvider>
         </BrowserRouter>
