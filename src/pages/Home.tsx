@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button"
-
-
 function Home() {
-
-  return (
-    <Button>Essa é a HOMEPAGE</Button>
-  )
+    return (
+        <>
+            <h1>Dungeon Starter</h1>
+        </>
+    );
 }
 
-export default Home
+export default Home;
