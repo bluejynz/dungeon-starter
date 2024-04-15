@@ -28,6 +28,8 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import ClassesSelect from "@/components/char-creator/ClassesSelect";
+import RacesSelect from "@/components/char-creator/RacesSelect";
 
 const FormSchema = z.object({
     charName: z
@@ -102,66 +104,8 @@ function CharCreator() {
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
-                                name="charClass"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <Select
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Classe" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                <SelectItem value="Warrior">
-                                                    Guerreiro
-                                                </SelectItem>
-                                                <SelectItem value="Mage">
-                                                    Mago
-                                                </SelectItem>
-                                                <SelectItem value="Ranger">
-                                                    Arqueiro
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="charRace"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <Select
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                        >
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Raça" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                <SelectItem value="Human">
-                                                    Humano
-                                                </SelectItem>
-                                                <SelectItem value="Elf">
-                                                    Elfo
-                                                </SelectItem>
-                                                <SelectItem value="Orc">
-                                                    Orc
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            <ClassesSelect control={form.control} />
+                            <RacesSelect control={form.control} />
 
                             <Button type="submit">Próximo</Button>
                         </form>
