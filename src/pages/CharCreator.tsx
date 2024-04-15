@@ -1,4 +1,25 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
+import { createCharacter } from "@/functions/CharCreatorFun";
 import {
     Card,
     CardContent,
@@ -7,43 +28,44 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { createCharacter } from "@/functions/CharCreator";
-import { useNavigate } from "react-router-dom";
 
+const FormSchema = z.object({
+    charName: z
+        .string({
+            required_error: "Por favor, digite um nome pro seu personagem",
+        })
+        .min(2, {
+            message: "O nome precisa ter pelo menos 2 letras.",
+        }),
+    charClass: z.string({
+        required_error: "Por favor, selecione uma classe",
+    }),
+    charRace: z.string({
+        required_error: "Por favor, selecione uma raça",
+    }),
+});
 
 function CharCreator() {
     const navigate = useNavigate();
-    
-    function handleClickNext() {
-        
-        const nameInput = document.getElementById(
-            "char-name"
-        ) as HTMLInputElement;
-        const classSelect = document.getElementById(
-            "char-class"
-        ) as HTMLButtonElement;
-        const raceSelect = document.getElementById(
-            "char-race"
-        ) as HTMLButtonElement;
-        console.log("peguei o botão", raceSelect);
-        
-        const charName = nameInput.value as string;
-        const charClass = classSelect.querySelector('span')?.textContent as string;
-        console.log("peguei a classe", charClass);
-        const charRace = raceSelect.querySelector('span')?.textContent as string;
-        
-        createCharacter({ name: charName, class: charClass, race: charRace });
-    
-        navigate("roll-dice");
-    }
+
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            charName: "",
+        },
+    });
+
+    const onSubmit = (data: z.infer<typeof FormSchema>) => {
+        console.log(data);
+
+        createCharacter({
+            name: data.charName,
+            class: data.charClass,
+            race: data.charRace,
+        });
+
+        navigate("dice-rolls");
+    };
 
     return (
         <>
@@ -56,39 +78,94 @@ function CharCreator() {
                     </CardDescription>
                 </CardHeader>
 
-                <CardContent className="flex flex-col gap-4">
-                    <div>
-                        <Label htmlFor="char-name">Nome do personagem:</Label>
-                        <Input
-                            type="text"
-                            id="char-name"
-                            placeholder="Digite o nome do seu personagem"
-                        />
-                    </div>
+                <CardContent>
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="flex flex-col gap-4"
+                        >
+                            <FormField
+                                control={form.control}
+                                name="charName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel htmlFor="char-name">
+                                            Nome do personagem:
+                                        </FormLabel>
+                                        <Input
+                                            type="text"
+                                            id="char-name"
+                                            placeholder="Digite o nome do seu personagem"
+                                            {...field}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="charClass"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Classe" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Warrior">
+                                                    Guerreiro
+                                                </SelectItem>
+                                                <SelectItem value="Mage">
+                                                    Mago
+                                                </SelectItem>
+                                                <SelectItem value="Ranger">
+                                                    Arqueiro
+                                                </SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="charRace"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Raça" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Human">
+                                                    Humano
+                                                </SelectItem>
+                                                <SelectItem value="Elf">
+                                                    Elfo
+                                                </SelectItem>
+                                                <SelectItem value="Orc">
+                                                    Orc
+                                                </SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                    <Select id="char-class">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Classe" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="warrior">Guerreiro</SelectItem>
-                            <SelectItem value="mage">Mago</SelectItem>
-                            <SelectItem value="ranger">Arqueiro</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <Select id="char-race">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Raça" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="human">Humano</SelectItem>
-                            <SelectItem value="elf">Elfo</SelectItem>
-                            <SelectItem value="orc">Orc</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <Button onClick={handleClickNext}>Próximo</Button>
+                            <Button type="submit">Próximo</Button>
+                        </form>
+                    </Form>
                 </CardContent>
             </Card>
         </>
