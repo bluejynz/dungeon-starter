@@ -3,7 +3,7 @@ import { FormField } from "../ui/form";
 import { ISelect } from "@/interfaces/ISelect";
 import { useEffect, useState } from "react";
 import { IDnDResponse } from "@/interfaces/IDnDResponseArray";
-import { getDndRaces } from "@/functions/DnDfuns";
+import { getDndRaces } from "@/functions/dnd-api/DnDfuns";
 
 const RacesSelect: React.FC<ISelect> = ({ control }) => {
     const [races, setRaces] = useState<IDnDResponse[]>([]);

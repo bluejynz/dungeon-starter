@@ -13,4 +13,16 @@ function saveCharacter(character: { name: string; class: string, race: string })
     localStorage.setItem("savedCharacter", characterString);
 }
 
-export { saveCharacter, createCharacter };
+function loadCharacter() {
+    const characterString = localStorage.getItem('savedCharacter');
+    if (characterString) {
+        const character = JSON.parse(characterString);
+        console.log('Personagem carregado:', character);
+        return character;
+    } else {
+        console.log('Nenhum personagem salvo encontrado.');
+        return null;
+    }
+}
+
+export { createCharacter, saveCharacter, loadCharacter };

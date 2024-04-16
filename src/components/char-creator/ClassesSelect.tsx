@@ -2,7 +2,7 @@ import SelectFromArray from "./SelectFromArray";
 import { FormField } from "../ui/form";
 import { ISelect } from "@/interfaces/ISelect";
 import { useEffect, useState } from "react";
-import { getDndClasses } from "@/functions/DnDfuns";
+import { getDndClasses } from "@/functions/dnd-api/DnDfuns";
 import { IDnDResponse } from "@/interfaces/IDnDResponseArray";
 
 const ClassesSelect: React.FC<ISelect> = ({ control }) => {

@@ -11,7 +11,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { useNavigate } from "react-router-dom";
-import { createCharacter } from "@/functions/CharCreatorFun";
+import { createCharacter } from "@/functions/character/CharLocalStorageFun";
 import {
     Card,
     CardContent,
