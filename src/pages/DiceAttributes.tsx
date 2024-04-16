@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import DiceContainer from "@/components/dice/DiceContainer";
 import {
     Card,
     CardContent,
@@ -6,15 +6,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { roll } from "@/functions/character/attributes/AttributesGenerationFun";
-import { useState } from "react";
 
 function DiceAttributes() {
-    const [diceRolls, setDiceRolls] = useState<Number[]>();
-
-    const handleRollClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        roll(event.currentTarget);
-    };
 
     return (
         <>
@@ -27,8 +20,7 @@ function DiceAttributes() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Button id="roll-dice" onClick={handleRollClick}>Roll dice x6</Button>
-                    <div id="dice-container"></div>
+                    <DiceContainer />
                 </CardContent>
             </Card>
         </>
