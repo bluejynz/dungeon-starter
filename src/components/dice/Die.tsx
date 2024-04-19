@@ -1,14 +1,26 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-function Die(props: { children: ReactNode }) {
-    return (
-        <div
-            className="die w-[80px] h-[80px] my-[20px] mx-auto flex justify-between 
-        bg-slate-50 rounded-md border border-slate-50 shadow-inner p-[14px] animate-spin-dice"
-        >
-            {props.children}
-        </div>
-    );
+interface IDie {
+    minor?: boolean;
+    children: ReactNode;
+}
+
+function Die(props: IDie) {
+    const { minor = false, children } = props;
+    const [classNames, setClassNames] = useState("");
+
+    useEffect(() => {
+        let cNames =
+            "die w-[80px] h-[80px] my-[20px] mx-auto flex justify-between rounded-md border shadow-inner p-[10px] animate-spin-dice ";
+        if (props.minor) {
+            cNames += "bg-[#f88] border-[#f88]";
+        } else {
+            cNames += "bg-[#ddd] border-[#ddd]";
+        }
+        setClassNames(cNames);
+    }, [minor]);
+
+    return <div className={classNames}>{children}</div>;
 }
 
 export default Die;

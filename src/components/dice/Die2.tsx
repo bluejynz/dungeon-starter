@@ -1,20 +1,16 @@
+import { IMinor } from "@/interfaces/IMinor";
 import Die from "./Die";
+import Dot from "./Dot";
 
-function Die2() {
+function Die2(props: IMinor) {
     return (
-        <Die>
-            <div className="column">
-                <div className="dot"></div>
-                <div className="dot hidden"></div>
-                <div className="dot hidden"></div>
+        <Die minor={props.minor}>
+            <div>
+                <Dot minor={false} />
             </div>
-            <div className="column center-column">
-                <div className="dot hidden"></div>
-            </div>
-            <div className="column">
-                <div className="dot hidden"></div>
-                <div className="dot hidden"></div>
-                <div className="dot"></div>
+            <div></div>
+            <div className="flex items-end">
+                <Dot minor={false} />
             </div>
         </Die>
     );

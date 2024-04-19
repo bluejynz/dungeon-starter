@@ -1,4 +1,6 @@
-type DieComponent = () => JSX.Element;
+import { IMinor } from "@/interfaces/IMinor";
+
+type DieComponent = ( props: IMinor ) => JSX.Element;
 let diceAttributeRolls: number[] = [];
 
 function roll(btn: HTMLButtonElement) {
@@ -10,7 +12,6 @@ function roll(btn: HTMLButtonElement) {
     createDiceElements(rngRolls);
     if (diceAttributeRolls.length >= 6) {
         btn.remove();
-        //     createAttributesAllocationElements();
     }
     console.log("dice", rngRolls);
     return rngRolls;
@@ -73,6 +74,8 @@ function getIndexOfMinorValue(arr: number[]) {
             break;
         }
     }
+    console.log("eu sou o menor indice", minorIndex);
+    
     return minorIndex;
 }
 
@@ -80,5 +83,5 @@ function randomIntFromInterval(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export { roll };
+export { roll, getIndexOfMinorValue };
 export type { DieComponent };
