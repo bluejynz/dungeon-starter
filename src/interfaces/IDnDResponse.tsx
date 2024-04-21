@@ -1,5 +1,5 @@
 export interface IDnDResponseArray {
-    classes: IDnDResponse[];
+    results: IDnDResponse[];
 }
 
 export interface IDnDResponse {

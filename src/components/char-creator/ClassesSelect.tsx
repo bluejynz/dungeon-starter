@@ -3,15 +3,15 @@ import { FormField } from "../ui/form";
 import { ISelect } from "@/interfaces/ISelect";
 import { useEffect, useState } from "react";
 import { getDndClasses } from "@/functions/dnd-api/DnDfuns";
-import { IDnDResponse } from "@/interfaces/IDnDResponseArray";
+import { IDnDResponse } from "@/interfaces/IDnDResponse";
 
 const ClassesSelect: React.FC<ISelect> = ({ control }) => {
     const [classes, setClasses] = useState<IDnDResponse[]>([]);
 
     useEffect(() => {
         getDndClasses().then((res) => {
-            if (res && res.classes) {
-                setClasses(res.classes);
+            if (res && res.results) {
+                setClasses(res.results);
             }
         });
     }, []);

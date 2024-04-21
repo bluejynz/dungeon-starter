@@ -1,4 +1,5 @@
 import { IMinor } from "@/interfaces/IMinor";
+import { saveCharacter } from "../CharLocalStorageFun";
 
 type DieComponent = ( props: IMinor ) => JSX.Element;
 let diceAttributeRolls: number[] = [];
@@ -10,10 +11,6 @@ function roll(btn: HTMLButtonElement) {
 
     saveDiceResults(diceAttributeRolls);
     createDiceElements(rngRolls);
-    if (diceAttributeRolls.length >= 6) {
-        btn.remove();
-    }
-    console.log("dice", rngRolls);
     return rngRolls;
 }
 
@@ -49,9 +46,10 @@ function createDiceElements(rngRolls: number[]) {
 }
 
 function saveDiceResults(values: number[]) {
-    console.log("Array stringify", JSON.stringify(values));
+    const savedChar = JSON.parse(localStorage.getItem("savedCharacter") || "{}");
     const diceResults = JSON.stringify(values);
-    localStorage.setItem("diceResults", diceResults);
+    savedChar.diceResults = diceResults;
+    saveCharacter(savedChar);
 }
 
 function rollDice(qty: number, size: number) {
@@ -74,7 +72,6 @@ function getIndexOfMinorValue(arr: number[]) {
             break;
         }
     }
-    console.log("eu sou o menor indice", minorIndex);
     
     return minorIndex;
 }

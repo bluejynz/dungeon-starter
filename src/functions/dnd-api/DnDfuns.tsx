@@ -1,4 +1,4 @@
-import { IDnDResponseArray } from "@/interfaces/IDnDResponseArray";
+import { IDnDResponseArray } from "@/interfaces/IDnDResponse";
 
 const baseURL = "https://www.dnd5eapi.co/api/";
 
@@ -11,7 +11,7 @@ async function getDndClasses() {
         const jsonData = await response.json();
 
         const transformedResponse: IDnDResponseArray = {
-            classes: jsonData.results,
+            results: jsonData.results,
         };
 
         return transformedResponse;
@@ -29,7 +29,7 @@ async function getDndRaces() {
         const jsonData = await response.json();
 
         const transformedResponse: IDnDResponseArray = {
-            classes: jsonData.results,
+            results: jsonData.results,
         };
 
         return transformedResponse;
@@ -38,4 +38,22 @@ async function getDndRaces() {
     }
 }
 
-export { getDndClasses, getDndRaces };
+async function getDndAttributes() {
+    try {
+        const response = await fetch(baseURL + "ability-scores");
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const jsonData = await response.json();
+
+        const transformedResponse: IDnDResponseArray = {
+            results: jsonData.results,
+        };
+
+        return transformedResponse;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export { getDndClasses, getDndRaces, getDndAttributes };

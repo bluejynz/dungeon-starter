@@ -3,6 +3,7 @@ export interface ISelectFromArray {
     defaultValue?: string;
     placeholder?: string;
     options: IOptions[];
+    label?: string;
 }
 
 export interface IOptions {

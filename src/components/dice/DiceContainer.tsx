@@ -9,7 +9,7 @@ import {
     getIndexOfMinorValue,
     roll,
 } from "@/functions/character/attributes/AttributesGenerationFun";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 const dice: { [key: number]: DieComponent } = {
@@ -21,9 +21,15 @@ const dice: { [key: number]: DieComponent } = {
     6: Die6,
 };
 
-function DiceContainer() {
+interface IDiceContainer {
+    diceResults: number[];
+    setDiceResults: Dispatch<SetStateAction<number[]>>;
+  }
+
+function DiceContainer( props: IDiceContainer) {
     const [diceRolls, setDiceRolls] = useState<number[]>([]);
     const [minorIndex, setMinorIndex] = useState<number>();
+    // const [diceResults, setDiceResults] = useState<number[]>([]);
 
     const handleRollClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setDiceRolls(roll(event.currentTarget));
@@ -31,13 +37,21 @@ function DiceContainer() {
 
     useEffect(() => {
         setMinorIndex(getIndexOfMinorValue(diceRolls));
+        const savedChar = JSON.parse(localStorage.savedCharacter);
+        if (savedChar.diceResults) {
+            props.setDiceResults(JSON.parse(savedChar.diceResults));
+        }
     }, [diceRolls]);
 
     return (
         <>
-            <Button id="roll-dice" onClick={handleRollClick}>
-                Roll dice x6
-            </Button>
+            {(!JSON.parse(localStorage.savedCharacter).diceResults ||
+                props.diceResults.length < 6) && (
+                <Button id="roll-dice" onClick={handleRollClick}>
+                    Roll dice x{6 - props.diceResults.length}
+                </Button>
+            )}
+
             <div id="dice-container" className="flex flex-row flex-wrap gap-10">
                 {diceRolls.map((r, i) => {
                     const DieComponent = dice[r];
