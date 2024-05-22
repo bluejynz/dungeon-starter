@@ -1,58 +1,49 @@
 import { IDnDResponseArray } from "@/interfaces/IDnDResponse";
+import axios from "axios";
 
 const baseURL = "https://www.dnd5eapi.co/api/";
 
-async function getDndClasses() {
+async function getDndClasses(): Promise<IDnDResponseArray> {
     try {
-        const response = await fetch(baseURL + "classes");
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const jsonData = await response.json();
-
+        const response = await axios.get(baseURL + "classes");
         const transformedResponse: IDnDResponseArray = {
-            results: jsonData.results,
+            results: response.data.results,
         };
-
+        
         return transformedResponse;
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
 async function getDndRaces() {
     try {
-        const response = await fetch(baseURL + "races");
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const jsonData = await response.json();
+        const response = await axios.get(baseURL + "races");
 
         const transformedResponse: IDnDResponseArray = {
-            results: jsonData.results,
+            results: response.data.results,
         };
 
         return transformedResponse;
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 
 async function getDndAttributes() {
     try {
-        const response = await fetch(baseURL + "ability-scores");
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const jsonData = await response.json();
+        const response = await axios.get(baseURL + "ability-scores");
 
         const transformedResponse: IDnDResponseArray = {
-            results: jsonData.results,
+            results: response.data.results,
         };
 
         return transformedResponse;
     } catch (error) {
         console.error(error);
+        throw error;
     }
 }
 

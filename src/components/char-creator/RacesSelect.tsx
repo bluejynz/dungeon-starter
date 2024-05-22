@@ -9,11 +9,15 @@ const RacesSelect: React.FC<ISelect> = ({ control }) => {
     const [races, setRaces] = useState<IDnDResponse[]>([]);
 
     useEffect(() => {
-        getDndRaces().then((res) => {
-            if (res && res.results) {
-                setRaces(res.results);
-            }
-        });
+        getDndRaces()
+            .then((res) => {
+                if (res && res.results) {
+                    setRaces(res.results);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
     return (
         <FormField

@@ -9,12 +9,17 @@ const ClassesSelect: React.FC<ISelect> = ({ control }) => {
     const [classes, setClasses] = useState<IDnDResponse[]>([]);
 
     useEffect(() => {
-        getDndClasses().then((res) => {
-            if (res && res.results) {
-                setClasses(res.results);
-            }
-        });
+        getDndClasses()
+            .then((res) => {
+                if (res && res.results) {
+                    setClasses(res.results);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
+
     return (
         <FormField
             control={control}
